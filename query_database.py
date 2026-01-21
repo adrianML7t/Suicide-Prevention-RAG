@@ -5,10 +5,10 @@ DB_DIR = "chroma"
 
 #Definir base de datos y LLM
 db = DB.get_db()
-llm = OllamaLLM(model="gpt-oss:120b-cloud")
+llm = OllamaLLM(model="command-r:35b")
 
 #Retrieval. K es el numero de fragmentos que devuelve
-query_text = "Consejos para personas en riesgo suicida"
+query_text = "Me siento muy deprimido ultimamente"
 results = db._similarity_search_with_relevance_scores(query_text, k=5)
 
 #Muestra la mejor coincidencia
@@ -21,11 +21,10 @@ context = top_doc.page_content.strip().replace("\n", " ") #En este caso al LLM l
 #Ajustar contexto y promts, y llamar a LLM
 
 prompt_text = f"""
-Teniendo en cuenta el siguiente contexto, responde a la pregunta como si fueras
-un experto psicólogo en prevención del suicidio.
+Responde a la pregunta como si fueras un experto psicólogo en prevención del suicidio. 
+Tu respuesta debe estar basada en el contexto proporcionado, pero adaptala a la pregunta para que 
+la respuesta sea directa.
 Si la respuesta no está en el contexto, di que no lo sabes.
-Escribe en un formato que se pueda ver correctamenta en la terminal de python, evitando
-tablas si es necesario.
 Contexto:
 {context}
 
@@ -43,5 +42,5 @@ print(f"Consulta: {query_text}")
 print("="*80)
 print(f"Respuesta:\n{response}")
 print("-" * 80)
-print(f"Contexto Utilizado (Relevancia: {top_score:.3f}):\n{context}")
+print(f"Contexto Utilizado:\n{context}")
 print("="*80)
