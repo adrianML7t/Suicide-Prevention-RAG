@@ -5,11 +5,14 @@ DB_DIR = "chroma"
 
 #Definir base de datos y LLM
 db = DB.get_db()
+#llm = OllamaLLM(model="gpt-oss:120b-cloud")
+#llm = OllamaLLM(model="llama3")
 llm = OllamaLLM(model="command-r:35b")
+
 
 #Retrieval. K es el numero de fragmentos que devuelve
 query_text = "Me siento muy deprimido ultimamente"
-results = db._similarity_search_with_relevance_scores(query_text, k=5)
+results = db._similarity_search_with_relevance_scores(query_text, k=1)
 
 #Muestra la mejor coincidencia
 results = sorted(results, key=lambda x: x[1], reverse=True)
