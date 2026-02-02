@@ -33,18 +33,24 @@ def run_rag_test(model_name):
     # Unimos todo en un solo string separado por saltos de línea
     full_context = "\n\n".join(context_list)
 
-    # 4. Prompt dinámico
+# 4. Prompt dinámico optimizado para Salud Mental
     prompt_text = f"""
-    Tu respuesta debe estar basada en el contexto proporcionado, pero adáptala a la pregunta para que sea directa.
-    Si la respuesta no está en el contexto, di que no lo sabes.
+    Instrucciones para el Asistente:
+    Estás respondiendo a una persona que podría estar en crisis. Usa la siguiente información de las guías de salud (Contexto) para responderle con empatía.
+    
+    Estructura tu respuesta así:
+    1.  **Validación inicial:** Una frase breve reconociendo su sufrimiento.
+    2.  **Recursos de Emergencia:** Si el contexto menciona teléfonos (112, etc.) o urgencias, menciónalos primero de forma suave pero clara.
+    3.  **Consejos Prácticos:** Extrae del contexto los puntos clave (Plan de seguridad, aliados, rutinas) y explícalos conversacionalmente.
+    4.  **Cierre esperanzador:** Recuérdale que las crisis son temporales (si el contexto lo avala).
 
-    Contexto:
+    INFORMACIÓN DE LAS GUÍAS (CONTEXTO):
     {full_context}
 
-    Pregunta:
+    PREGUNTA DEL USUARIO:
     {query_text}
 
-    Respuesta:
+    TU RESPUESTA (Empática y basada EXCLUSIVAMENTE en el contexto anterior):
     """
 
     # 5. Llamada al LLM
