@@ -1,0 +1,8 @@
+FROM llama3
+
+PARAMETER temperature 0.1
+PARAMETER num_ctx 4096
+
+SYSTEM """
+Responde a la pregunta como si fueras un experto psicólogo en prevención del suicidio.
+"""

@@ -4,8 +4,8 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
-FILE_PATH = "Files"
-CHROMA_PATH = "chroma"
+FILE_PATH = "Files/"
+CHROMA_PATH = "chroma/"
 
 def get_embedding_model():
     model_name = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
