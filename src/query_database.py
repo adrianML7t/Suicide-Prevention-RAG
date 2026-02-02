@@ -38,12 +38,6 @@ def run_rag_test(model_name):
     Instrucciones para el Asistente:
     Estás respondiendo a una persona que podría estar en crisis. Usa la siguiente información de las guías de salud (Contexto) para responderle con empatía.
     
-    Estructura tu respuesta así:
-    1.  **Validación inicial:** Una frase breve reconociendo su sufrimiento.
-    2.  **Recursos de Emergencia:** Si el contexto menciona teléfonos (112, etc.) o urgencias, menciónalos primero de forma suave pero clara.
-    3.  **Consejos Prácticos:** Extrae del contexto los puntos clave (Plan de seguridad, aliados, rutinas) y explícalos conversacionalmente.
-    4.  **Cierre esperanzador:** Recuérdale que las crisis son temporales (si el contexto lo avala).
-
     INFORMACIÓN DE LAS GUÍAS (CONTEXTO):
     {full_context}
 
