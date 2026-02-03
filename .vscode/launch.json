@@ -5,7 +5,7 @@
             "name": "Test RAG: Llama 3",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/query_database.py",
             "console": "integratedTerminal",
             "args": ["llama3"],
             "justMyCode": true
@@ -14,7 +14,7 @@
             "name": "Test RAG: Com 3.5",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/query_database.py",
             "console": "integratedTerminal",
             "args": ["com35"],
             "justMyCode": true
@@ -23,9 +23,27 @@
             "name": "Test RAG: GPT 120",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/query_database.py",
             "console": "integratedTerminal",
             "args": ["gpt120"],
+            "justMyCode": true
+        },
+        {
+            "name": "Crear Base de Datos 3ra persona (Chroma3)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/create_database.py",
+            "console": "integratedTerminal",
+            "args": ["Files/3rd", "chroma3/"],
+            "justMyCode": true
+        },
+        {
+            "name": "Crear Base de Datos 1ra persona (Chroma3)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/create_database.py",
+            "console": "integratedTerminal",
+            "args": ["Files/1st", "chroma1/"],
             "justMyCode": true
         }
     ]
