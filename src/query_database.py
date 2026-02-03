@@ -1,9 +1,9 @@
 import sys
-import create_database as DB
+import create_database1 as DB
 from langchain_ollama import OllamaLLM
 
 # --- CONFIGURACIÓN ---
-DB_DIR = "chroma/"
+DB_DIR = "chroma1/"
 
 def run_rag_test(model_name):
     # 1. Set LLM to input
@@ -44,7 +44,7 @@ def run_rag_test(model_name):
     PREGUNTA DEL USUARIO:
     {query_text}
 
-    TU RESPUESTA (Empática y basada EXCLUSIVAMENTE en el contexto anterior):
+    TU RESPUESTA (basada EXCLUSIVAMENTE en el contexto anterior):
     """
 
     # 5. Llamada al LLM

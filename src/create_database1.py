@@ -4,8 +4,8 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
-FILE_PATH = "Files/"
-CHROMA_PATH = "chroma/"
+FILE_PATH = "Files/3rd"
+CHROMA_PATH = "chroma3/"
 
 def get_embedding_model():
     model_name = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
@@ -48,5 +48,5 @@ def get_db():
     )
     return vector_store
 
-if __name__ == "__main__":
+if __name__ == "__main__": #Nota: los imports retrasan bastante la ejecucion del programa..
     create_vector_db()
