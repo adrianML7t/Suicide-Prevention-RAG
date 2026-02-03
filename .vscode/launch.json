@@ -5,7 +5,7 @@
             "name": "Test RAG: Llama 3",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/query_database.py",
+            "program": "${workspaceFolder}/src/query_database.py",
             "console": "integratedTerminal",
             "args": ["llama3"],
             "justMyCode": true
@@ -14,7 +14,7 @@
             "name": "Test RAG: Com 3.5",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/query_database.py",
+            "program": "${workspaceFolder}/src/query_database.py",
             "console": "integratedTerminal",
             "args": ["com35"],
             "justMyCode": true
@@ -23,7 +23,7 @@
             "name": "Test RAG: GPT 120",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/query_database.py",
+            "program": "${workspaceFolder}/src/query_database.py",
             "console": "integratedTerminal",
             "args": ["gpt120"],
             "justMyCode": true
