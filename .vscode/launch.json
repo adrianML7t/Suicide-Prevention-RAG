@@ -2,12 +2,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Test RAG: Llama 3",
+            "name": "Test RAG: Llama 3-8b",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/src/query_database.py",
             "console": "integratedTerminal",
-            "args": ["llama3"],
+            "args": ["llama3-8b"],
+            "justMyCode": true
+        },
+            {
+            "name": "Test RAG: Llama 3-70b",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/query_database.py",
+            "console": "integratedTerminal",
+            "args": ["llama3-70b"],
             "justMyCode": true
         },
         {

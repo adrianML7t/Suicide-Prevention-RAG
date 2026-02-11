@@ -8,12 +8,14 @@ DB_DIR3 = "chroma3/"
 
 def run_rag_test(model_name):
     # 1. Set LLM to input
-    if model_name == "llama3":
-        llm = OllamaLLM(model="llama3-sp")
+    if model_name == "llama3-8b":
+        llm = OllamaLLM(model="llama3-8b-sp")
     elif model_name == "com35":
         llm = OllamaLLM(model="com35-sp")
     elif model_name == "gpt120":
         llm = OllamaLLM(model="gpt-oss:120b-cloud")
+    elif model_name == "llama3-70b":
+        llm = OllamaLLM(model="llama3-70b-sp")
     else:
         print(f"Error: Modelo '{model_name}' no reconocido.")
         return
