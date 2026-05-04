@@ -1,6 +1,8 @@
 import sys
 import create_database as DB
 from langchain_ollama import OllamaLLM
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 
 # --- CONFIGURACIÓN ---
 DB_DIR1 = "chroma1/"
@@ -20,50 +22,52 @@ def run_rag_test(model_name):
         print(f"Error: Modelo '{model_name}' no reconocido.")
         return
 
-    # 2. Definir base de datos en base a la consulta
-    query_text = input("Escribe tu consulta: ")
-    chroma_path = get_route(llm,query_text) #baja el rendimiento pasar el llm a una funcion?
-    db = DB.get_db(chroma_path)
+    while True:
+        # 2. Definir base de datos en base a la consulta
+        query_text = input("Escribe tu consulta: ")
+        chroma_path = get_route(llm,query_text) #baja el rendimiento pasar el llm a una funcion?
+        db = DB.get_db(chroma_path)
 
-    # 3. Retrieval
-    results = db.similarity_search_with_relevance_scores(query_text, k=5)
-  
-    context_list = []
-    for doc, score in results:
-        # Limpiamos el texto y lo añadimos a la lista
-        clean_content = doc.page_content.strip().replace("\n", " ")
-        context_list.append(f"- {clean_content}")
-
-    # Unimos todo en un solo string separado por saltos de línea
-    full_context = "\n\n".join(context_list)
-
-# 4. Prompt dinámico optimizado para Salud Mental
-    prompt_text = f"""
-    Instrucciones para el Asistente:
-    Estás respondiendo a una persona que podría estar en crisis. Usa la siguiente información de las guías de salud (Contexto) para responderle con empatía.
+        # 3. Retrieval
+        results = db.similarity_search_with_relevance_scores(query_text, k=5)
     
-    INFORMACIÓN DE LAS GUÍAS (CONTEXTO):
-    {full_context}
+        context_list = []
+        for doc, score in results:
+            # Limpiamos el texto y lo añadimos a la lista
+            clean_content = doc.page_content.strip().replace("\n", " ")
+            context_list.append(f"- {clean_content}")
 
-    PREGUNTA DEL USUARIO:
-    {query_text}
+        # Unimos todo en un solo string separado por saltos de línea
+        full_context = "\n\n".join(context_list)
 
-    TU RESPUESTA (basada EXCLUSIVAMENTE en el contexto anterior):
-    """
+    # 4. Prompt dinámico optimizado para Salud Mental
+        prompt_text = f"""
+        Instrucciones para el Asistente:
+        Estás respondiendo a una persona que podría estar en crisis de salud mental. Usa la siguiente información de las guías de salud (Contexto) para responderle con empatía.
+        Asegurate de proponer recursos de ayuda apropiados, siempre proporcionando un número de contacto.
+        
+        INFORMACIÓN DE LAS GUÍAS (CONTEXTO):
+        {full_context}
 
-    # 5. Llamada al LLM
-    response = llm.invoke(prompt_text)
+        PREGUNTA DEL USUARIO:
+        {query_text}
 
- # --- Mostrar resultados --- -> pasar a show_results
-    print("\n" + "="*80)
-    print(f"RESULTADOS PARA EL MODELO: {model_name}")
-    print("="*80)
-    print(f"Consulta: {query_text}")
-    print("-" * 80)
-    print(f"Respuesta:\n{response}")
-    print("-" * 80)
-    print(f"Contexto Utilizado (Score Top: {results[0][1] if results else 'N/A'}):\n{full_context}")
-    print("="*80 + "\n")
+        TU RESPUESTA (basada EXCLUSIVAMENTE en el contexto anterior):
+        """
+
+        # 5. Llamada al LLM
+        response = llm.invoke(prompt_text)
+
+    # --- Mostrar resultados --- -> pasar a show_results
+        print("\n" + "="*80)
+        #print(f"RESULTADOS PARA EL MODELO: {model_name}")
+        #print("="*80)
+        #print(f"Consulta: {query_text}")
+        print("-" * 80)
+        print(f"Respuesta:\n{response}")
+        print("-" * 80)
+        #print(f"Contexto Utilizado (Score Top: {results[0][1] if results else 'N/A'}):\n{full_context}")
+        #print("="*80 + "\n")
 
 
 def get_route(llm, query): # Mas adelante introducir aqui la clasificacion de riesgo ??

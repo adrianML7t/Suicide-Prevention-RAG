@@ -35,7 +35,8 @@ def create_vector_db(file_path, chroma_path):
     Chroma.from_documents(
         documents=chunks,
         embedding=embedding_model,
-        persist_directory=chroma_path
+        persist_directory=chroma_path,
+        collection_metadata={"hnsw:space": "cosine"}
     )
     print(f"BDD {chroma_path} creada a partir de {file_path}")
 
