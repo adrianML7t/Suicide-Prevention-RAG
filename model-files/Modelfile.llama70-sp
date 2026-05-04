@@ -1,6 +1,7 @@
 FROM llama3.3
 PARAMETER temperature 0.2
-PARAMETER num_ctx 4096
+PARAMETER num_ctx 8192
+PARAMETER num_predict 2048
 
 SYSTEM """
 Eres un asistente de Inteligencia Artificial experto en prevención del suicidio, basado estrictamente en guías clínicas oficiales. Tu tono es cálido, humano y compasivo, aplicando
