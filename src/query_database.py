@@ -4,7 +4,7 @@ from langchain_ollama import OllamaLLM
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
-# --- CONFIGURACIÓN ---
+# --- CONFIGURATION ---
 DB_DIR1 = "chroma1/"
 DB_DIR3 = "chroma3/"
 
@@ -23,7 +23,7 @@ def run_rag_test(model_name):
         return
 
     while True:
-        # 2. Definir base de datos en base a la consulta
+        # 2. Choose database based on the query
         query_text = input("Escribe tu consulta: ")
         chroma_path = get_route(llm,query_text) #baja el rendimiento pasar el llm a una funcion?
         db = DB.get_db(chroma_path)
@@ -33,14 +33,14 @@ def run_rag_test(model_name):
     
         context_list = []
         for doc, score in results:
-            # Limpiamos el texto y lo añadimos a la lista
+            # Clean the text and add it to the list
             clean_content = doc.page_content.strip().replace("\n", " ")
             context_list.append(f"- {clean_content}")
 
-        # Unimos todo en un solo string separado por saltos de línea
+        # Join everything into a single string separated by blank lines
         full_context = "\n\n".join(context_list)
 
-    # 4. Prompt dinámico optimizado para Salud Mental
+    # 4. Dynamic prompt optimized for Mental Health
         prompt_text = f"""
         Instrucciones para el Asistente:
         Estás respondiendo a una persona que podría estar en crisis de salud mental. Usa la siguiente información de las guías de salud (Contexto) para responderle con empatía.
@@ -55,10 +55,10 @@ def run_rag_test(model_name):
         TU RESPUESTA (basada EXCLUSIVAMENTE en el contexto anterior):
         """
 
-        # 5. Llamada al LLM
+        # 5. Call to the LLM
         response = llm.invoke(prompt_text)
 
-    # --- Mostrar resultados --- -> pasar a show_results
+    # --- Display results --- -> move to show_results
         print("\n" + "="*80)
         #print(f"RESULTADOS PARA EL MODELO: {model_name}")
         #print("="*80)
@@ -70,7 +70,7 @@ def run_rag_test(model_name):
         #print("="*80 + "\n")
 
 
-def get_route(llm, query): # Mas adelante introducir aqui la clasificacion de riesgo ??
+def get_route(llm, query): # Risk classification to be added here later ??
     print(f" Analizando intención de la consulta...")
         
     router_prompt = f"""
@@ -83,21 +83,21 @@ def get_route(llm, query): # Mas adelante introducir aqui la clasificacion de ri
     
     Responde SOLAMENTE con una de esas dos palabras (PROPIO u OTRO).
     """
-    # El LLM decide
+    # The LLM decides
     decision = llm.invoke(router_prompt).strip().upper()
     
-    # Lógica de selección de base de datos
+    # Database selection logic
     if "OTRO" in decision:
         print(">> Modo detectado: Ayuda a un TERCERO (Familiares/Amigos)")
         selected_db_path = DB_DIR3
     else:
-        # Por seguridad, si duda, asumimos que es el propio usuario (PROPIO)
+        # For safety, if uncertain, assume the user themselves (PROPIO)
         print(">> Modo detectado: Ayuda PROPIA (Paciente)")
         selected_db_path = DB_DIR1
     return selected_db_path
 
 if __name__ == "__main__":
-    # Verificamos que se haya pasado un argumento por terminal
+    # Verify that a command-line argument was provided
     if len(sys.argv) < 2:
         print("Uso: python nombre_del_script.py [llama3|com35|gpt120]")
     else:
