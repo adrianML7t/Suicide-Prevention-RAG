@@ -6,6 +6,8 @@ from langchain_huggingface import HuggingFaceEmbeddings
 import sys
 
 
+# Return a ready-to-use HuggingFace embeddings object.
+# Uses a multilingual sentence-transformers model and forces CPU usage by default.
 def get_embedding_model():
     model_name = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
     model_kwargs = {'device': 'cpu'}
@@ -15,11 +17,20 @@ def get_embedding_model():
         model_kwargs=model_kwargs,
     )
 
+
+# Load all PDF documents from a directory and return them as a list of Document objects.
+# file_path should point to a directory containing PDF files. Uses PyPDFLoader via DirectoryLoader.
 def load_docs(file_path):
     loader = DirectoryLoader(file_path, glob="*.pdf", loader_cls=PyPDFLoader)
     docs = loader.load()
     return docs
 
+
+# Create a Chroma vector store from PDFs in file_path and persist it to chroma_path.
+# Process:
+# 1. Split documents into overlapping chunks with RecursiveCharacterTextSplitter.
+# 2. Embed each chunk using the HuggingFace embeddings model.
+# 3. Persist the resulting vector collection to disk for later retrieval.
 def create_vector_db(file_path, chroma_path):
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
@@ -40,6 +51,9 @@ def create_vector_db(file_path, chroma_path):
     )
     print(f"BDD {chroma_path} creada a partir de {file_path}")
 
+
+# Open an existing Chroma vector store located at chroma_path and return it.
+# The returned object can be used to run similarity searches or add more documents.
 def get_db(chroma_path):
     embedding_model = get_embedding_model()
     vector_store = Chroma(
@@ -48,7 +62,11 @@ def get_db(chroma_path):
     )
     return vector_store
 
+
+# Command-line entrypoint: expects two arguments (file_path, chroma_path).
+# If provided, it will build the vector DB from the PDFs in file_path and save to chroma_path.
 if __name__ == "__main__": 
+    # Note: imports significantly delay program startup — this could be improved
     if len(sys.argv) == 1:
         print("to execute: src/create_database.py file_path chroma_path")
     elif len(sys.argv) == 3:
