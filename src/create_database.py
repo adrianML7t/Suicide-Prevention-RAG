@@ -49,7 +49,6 @@ def get_db(chroma_path):
     return vector_store
 
 if __name__ == "__main__": 
-    # Note: imports significantly delay program startup — this could be improved
     if len(sys.argv) == 1:
         print("to execute: src/create_database.py file_path chroma_path")
     elif len(sys.argv) == 3:
