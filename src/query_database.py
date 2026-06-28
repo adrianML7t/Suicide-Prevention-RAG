@@ -25,7 +25,7 @@ def run_rag_test(model_name):
     while True:
         # 2. Choose database based on the query
         query_text = input("Escribe tu consulta: ")
-        chroma_path = get_route(llm,query_text) #baja el rendimiento pasar el llm a una funcion?
+        chroma_path = get_route(llm,query_text)
         db = DB.get_db(chroma_path)
 
         # 3. Retrieval
@@ -58,19 +58,14 @@ def run_rag_test(model_name):
         # 5. Call to the LLM
         response = llm.invoke(prompt_text)
 
-    # --- Display results --- -> move to show_results
         print("\n" + "="*80)
-        #print(f"RESULTADOS PARA EL MODELO: {model_name}")
-        #print("="*80)
-        #print(f"Consulta: {query_text}")
         print("-" * 80)
         print(f"Respuesta:\n{response}")
         print("-" * 80)
-        #print(f"Contexto Utilizado (Score Top: {results[0][1] if results else 'N/A'}):\n{full_context}")
-        #print("="*80 + "\n")
+       
 
 
-def get_route(llm, query): # Risk classification to be added here later ??
+def get_route(llm, query):
     print(f" Analizando intención de la consulta...")
         
     router_prompt = f"""
