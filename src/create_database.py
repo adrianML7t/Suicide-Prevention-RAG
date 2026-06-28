@@ -48,7 +48,7 @@ def get_db(chroma_path):
     )
     return vector_store
 
-if __name__ == "__main__": #Nota: los imports retrasan bastante la ejecucion del programa.. Se podria solucionar?
+if __name__ == "__main__": 
     if len(sys.argv) == 1:
         print("to execute: src/create_database.py file_path chroma_path")
     elif len(sys.argv) == 3:
